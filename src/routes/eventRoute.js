@@ -7,7 +7,7 @@ const router = express.Router()
 router.post("/events", authVerfication, eventController.createEvent)
 
 // read all event
-router.get("/events", eventController.getAllEvents)
+router.get("/events/:pageNo/:perPage", eventController.getAllEvents)
 
 // read single event
 router.get("/events/:id", eventController.getSingleEvent)

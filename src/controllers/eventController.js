@@ -26,7 +26,38 @@ exports.createEvent = async (req, res) => {
 // get all events
 exports.getAllEvents = async (req, res) => {
     try {
-        const data = await eventModel.find()
+        const perPage = Number(req.params.perPage)
+        const pageNo = Number(req.params.pageNo)
+
+        const skipRow = (pageNo - 1) * perPage
+
+
+        const sortStage = {
+            $sort: {
+                createdAt: - 1
+            }
+        }
+
+        const skipStage = {
+            $skip: skipRow
+        }
+
+        const limitStage = {
+            $limit: perPage
+        }
+
+        const facetPipeLine = {
+            $facet: {
+                totalCount: [{ $count: 'count' }],
+                events: [
+                    sortStage,
+                    skipStage,
+                    limitStage
+                ]
+            }
+        }
+
+        const data = await eventModel.aggregate([facetPipeLine])
         return res.status(200).json({
             success: true,
             message: "Event fetched successfully",
