@@ -12,6 +12,9 @@ router.get("/events", eventController.getAllEvents)
 // read single event
 router.get("/events/:id", eventController.getSingleEvent)
 
+// update event
+router.put("/events/:id", authVerfication, eventController.updateEvent)
+
 // delete event
 router.delete("/events/:id", authVerfication, eventController.deleteEvent)
 

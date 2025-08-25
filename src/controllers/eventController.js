@@ -62,6 +62,47 @@ exports.getSingleEvent = async (req, res) => {
     }
 }
 
+// update event
+exports.updateEvent = async (req, res) => {
+    const id = req.params.id
+    const authUserId = req.headers._id
+
+
+    try {
+        const eventData = await eventModel.findById({ _id: id })
+        if (eventData == null) {
+            return res.status(404).json({
+                success: true,
+                message: "Not found",
+            })
+        }
+
+        if (authUserId == eventData.userId) {
+            const data = await eventModel.findByIdAndUpdate({ _id: id }, { $set: req.body }, { new: true })
+            return res.status(200).json({
+                success: true,
+                message: "Update successful",
+                data
+            })
+        } else {
+            return res.status(401).json({
+                success: false,
+                message: "Unauthorized"
+            })
+        }
+
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            error: error.message.toString(),
+            message: "Something went wrong."
+        })
+    }
+}
+
+
+
+//delete event
 exports.deleteEvent = async (req, res) => {
     const id = req.params.id
 
@@ -69,6 +110,12 @@ exports.deleteEvent = async (req, res) => {
 
     try {
         const eventData = await eventModel.findById({ _id: id })
+        if (eventData == null) {
+            return res.status(404).json({
+                success: false,
+                message: "Not found"
+            })
+        }
         if (authUserId == eventData.userId) {
             await eventModel.findByIdAndDelete({ _id: id })
             return res.status(200).json({
