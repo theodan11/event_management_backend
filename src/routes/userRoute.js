@@ -1,0 +1,26 @@
+const express = require("express")
+
+const userController = require("../controllers/userController.js")
+
+const router = express.Router()
+
+// testing 
+router.get('/getUser', async (req, res) => {
+    return res.status(200).json({
+        success: "hello world"
+    })
+})
+
+
+// user create
+router.post('/registration', userController.createUser)
+
+// user login
+router.post('/login', userController.loginUser)
+
+// get logged in user
+router.get('/user', userController.getUser)
+
+
+
+module.exports = router
