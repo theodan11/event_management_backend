@@ -15,7 +15,7 @@ const eventRoute = require("./src/routes/eventRoute")
 const app = express()
 
 const ratelimit = rateLimit({
-    windowMs: 15 * 16 * 1000,
+    windowMs: 15 * 60 * 1000,
     limit: 100
 })
 
@@ -27,6 +27,9 @@ app.use(hpp())
 app.use(ratelimit)
 app.use(express.json({ limit: "20mb" }))
 app.use(express.urlencoded({ limit: "20mb" }))
+
+
+
 
 // api endpoints
 app.use('/api/v1/', userRoute)
