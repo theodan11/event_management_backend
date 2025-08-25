@@ -12,6 +12,8 @@ router.get("/events", eventController.getAllEvents)
 // read single event
 router.get("/events/:id", eventController.getSingleEvent)
 
+// delete event
+router.delete("/events/:id", authVerfication, eventController.deleteEvent)
 
 
 module.exports = router

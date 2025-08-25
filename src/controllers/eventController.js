@@ -41,6 +41,8 @@ exports.getAllEvents = async (req, res) => {
     }
 }
 
+
+// get single events
 exports.getSingleEvent = async (req, res) => {
     const id = req.params.id
 
@@ -51,6 +53,36 @@ exports.getSingleEvent = async (req, res) => {
             message: "Event fetch successfully",
             data
         })
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            error: error.message.toString(),
+            message: "Something went wrong."
+        })
+    }
+}
+
+exports.deleteEvent = async (req, res) => {
+    const id = req.params.id
+
+    const authUserId = req.headers._id
+
+    try {
+        const eventData = await eventModel.findById({ _id: id })
+        if (authUserId == eventData.userId) {
+            await eventModel.findByIdAndDelete({ _id: id })
+            return res.status(200).json({
+                success: true,
+                message: "Event Deleted successfully"
+            })
+        } else {
+            return res.status(401).json({
+                success: false,
+                message: "Unauthorized"
+            })
+        }
+
+
     } catch (error) {
         return res.status(500).json({
             success: false,
