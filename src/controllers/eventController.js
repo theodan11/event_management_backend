@@ -22,3 +22,40 @@ exports.createEvent = async (req, res) => {
         })
     }
 }
+
+// get all events
+exports.getAllEvents = async (req, res) => {
+    try {
+        const data = await eventModel.find()
+        return res.status(200).json({
+            success: true,
+            message: "Event fetched successfully",
+            data
+        })
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            error: error.message.toString(),
+            message: "Something went wrong."
+        })
+    }
+}
+
+exports.getSingleEvent = async (req, res) => {
+    const id = req.params.id
+
+    try {
+        const data = await eventModel.findById({ _id: id })
+        return res.status(200).json({
+            success: true,
+            message: "Event fetch successfully",
+            data
+        })
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            error: error.message.toString(),
+            message: "Something went wrong."
+        })
+    }
+}

@@ -4,8 +4,13 @@ const authVerfication = require("../middlewares/authVerfication")
 const router = express.Router()
 
 // create event
-router.post("/event", authVerfication, eventController.createEvent)
+router.post("/events", authVerfication, eventController.createEvent)
 
+// read all event
+router.get("/events", eventController.getAllEvents)
+
+// read single event
+router.get("/events/:id", eventController.getSingleEvent)
 
 
 
