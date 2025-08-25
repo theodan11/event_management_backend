@@ -1,6 +1,7 @@
 const express = require("express")
 
 const userController = require("../controllers/userController.js")
+const authVerfication = require("../middlewares/authVerfication.js")
 
 const router = express.Router()
 
@@ -19,7 +20,7 @@ router.post('/registration', userController.createUser)
 router.post('/login', userController.loginUser)
 
 // get logged in user
-router.get('/user', userController.getUser)
+router.get('/user', authVerfication, userController.getUser)
 
 
 

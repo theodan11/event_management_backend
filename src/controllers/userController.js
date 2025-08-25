@@ -44,7 +44,7 @@ exports.loginUser = async (req, res) => {
         if (!user) {
             return res.status(401).json({
                 success: false,
-                message: "User not fount"
+                message: "User not found"
             })
         }
 
@@ -88,18 +88,16 @@ exports.loginUser = async (req, res) => {
 
 // get logged in user profile
 exports.getUser = async (req, res) => {
-    const id = req.headers._id
+    const email = req.headers.email
 
     const match = {
-        $match: {
-            _id: id
-        }
+        $match: { email },
     }
 
     const project = {
         $project: {
             password: 0
-        }
+        },
     }
 
     try {
