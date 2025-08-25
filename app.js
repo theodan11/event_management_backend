@@ -10,6 +10,7 @@ const cookieParser = require("cookie-parser")
 const mongoose = require("mongoose")
 
 const userRoute = require("./src/routes/userRoute")
+const eventRoute = require("./src/routes/eventRoute")
 
 const app = express()
 
@@ -27,8 +28,9 @@ app.use(ratelimit)
 app.use(express.json({ limit: "20mb" }))
 app.use(express.urlencoded({ limit: "20mb" }))
 
-// api
+// api endpoints
 app.use('/api/v1/', userRoute)
+app.use('/api/v1/', eventRoute)
 
 
 

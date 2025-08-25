@@ -1,6 +1,10 @@
-const mongoose = required("mongoose")
+const mongoose = require("mongoose")
 
 const dataSchema = new mongoose.Schema({
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true
+    },
     title: {
         type: String,
         required: true,
@@ -19,6 +23,10 @@ const dataSchema = new mongoose.Schema({
     location: String,
     organizationName: String,
     eventBanner: String
-})
+},
+    {
+        versionKey: false,
+        timestamps: true
+    })
 
 module.exports = mongoose.model("events", dataSchema)
