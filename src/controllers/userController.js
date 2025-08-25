@@ -143,3 +143,20 @@ exports.updateUser = async (req, res) => {
         })
     }
 }
+
+
+exports.logoutUser = (req, res) => {
+
+    try {
+        return res.clearCookie("access_token").status(200).json({
+            success: true,
+            message: "Logout successful"
+        })
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            error: error.message.toString(),
+            message: "Something went wrong"
+        })
+    }
+}

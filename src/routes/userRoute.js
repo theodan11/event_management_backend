@@ -25,4 +25,7 @@ router.get('/user', authVerfication, userController.getUser)
 // update user
 router.put('/user', authVerfication, userController.updateUser)
 
+// logout user
+router.get('/logout', authVerfication, userController.logoutUser)
+
 module.exports = router
