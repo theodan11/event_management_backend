@@ -117,3 +117,29 @@ exports.getUser = async (req, res) => {
 
 
 }
+
+exports.updateUser = async (req, res) => {
+    const id = req.headers._id
+    const { email, name, phoneNumber, password } = req.body
+    try {
+        if (password) {
+            hashedPassword = await bcrypt.hash(password, 10)
+        }
+        const updatedData = { email, name, phoneNumber }
+        updatedData.password = hashedPassword
+
+        const data = await userModel.findByIdAndUpdate(id, { $set: updatedData }, { new: true })
+        return res.status(201).json({
+            success: true,
+            message: "Update successfully",
+            data
+        })
+
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            error: error.message.toString(),
+            message: "Something went wrong"
+        })
+    }
+}

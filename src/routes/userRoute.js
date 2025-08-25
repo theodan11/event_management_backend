@@ -22,6 +22,7 @@ router.post('/login', userController.loginUser)
 // get logged in user
 router.get('/user', authVerfication, userController.getUser)
 
-
+// update user
+router.put('/user', authVerfication, userController.updateUser)
 
 module.exports = router
